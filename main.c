@@ -131,6 +131,7 @@ int main() {
     }
 
     print_res(res, type1);
-
+    free(str);
+    free(split_str);
     return 0;
 }
