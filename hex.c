@@ -40,7 +40,6 @@ char *dec_to_hex(int dec) {
     int i;
 
     if (sign == -1) {
-        hex[0] = '-';
         i = 1;
     } else {
         i = 0;
@@ -63,7 +62,7 @@ char *dec_to_hex(int dec) {
     hex[i] = 'x';
     hex[i + 1] = '0';
     hex[i + 2] = '\0';
-    return strreverse(hex);
+    return sign > 0 ? strreverse(hex) : strcat("-", strreverse(hex));
 }
 
 char* bnot_hex(char *hex) {

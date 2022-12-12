@@ -35,7 +35,6 @@ char *dec_to_oct(int dec) {
 
     int i;
     if (sign == -1) {
-        oct[0] = '-';
         i = 1;
     } else {
         i = 0;
@@ -48,7 +47,7 @@ char *dec_to_oct(int dec) {
     }
 
     oct[i] = '\0';
-    return strreverse(oct);
+    return sign > 0 ? strreverse(oct) : strcat("-", strreverse(oct));
 }
 
 char* bnot_oct(char *oct) {

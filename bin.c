@@ -33,7 +33,6 @@ char *dec_to_bin(int dec) {
 
     int i;
     if (sign == -1) {
-        bin[0] = '-';
         i = 1;
     } else {
         i = 0;
@@ -47,7 +46,7 @@ char *dec_to_bin(int dec) {
 
     bin[i] = '\0';
 
-    return strreverse(bin);
+    return sign > 0 ? strreverse(bin) : strcat("-", strreverse(bin));
 }
 
 char* bnot_bin(char *bin) {
