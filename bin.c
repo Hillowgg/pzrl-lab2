@@ -28,15 +28,17 @@ int bin_to_dec(char *bin) {
 char *dec_to_bin(int dec) {
     char* bin = malloc(128);
     memset(bin, 0, 128);
+    if (dec == 0) {
+        bin[0] = '0';
+        bin[1] = '\0';
+        return bin;
+    }
+
     int sign = dec >= 0 ? 1 : -1;
     dec = dec < 0 ? -dec : dec;
 
-    int i;
-    if (sign == -1) {
-        i = 1;
-    } else {
-        i = 0;
-    }
+    int i = 0;
+
 
     while (dec != 0) {
         bin[i] = dec % 2 + '0';
@@ -46,7 +48,15 @@ char *dec_to_bin(int dec) {
 
     bin[i] = '\0';
 
-    return sign > 0 ? strreverse(bin) : strcat("-", strreverse(bin));
+    if (sign > 0) {
+        return strreverse(bin);
+    } else {
+        char* res = malloc(128);
+        memset(res, 0, 128);
+        res[0] = '-';
+        strcat(res, strreverse(bin));
+        return res;
+    }
 }
 
 char* bnot_bin(char *bin) {

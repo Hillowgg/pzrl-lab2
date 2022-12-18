@@ -35,15 +35,16 @@ int hex_to_dec(char *hex) {
 char *dec_to_hex(int dec) {
     char* hex = malloc(128);
     memset(hex, 0, 128);
+    if (dec == 0) {
+        hex[0] = '0';
+        hex[1] = 'x';
+        hex[2] = '0';
+        hex[3] = '\0';
+        return hex;
+    }
     int sign = dec >= 0 ? 1 : -1;
     dec = dec < 0 ? -dec : dec;
-    int i;
-
-    if (sign == -1) {
-        i = 1;
-    } else {
-        i = 0;
-    }
+    int i = 0;
 
 
 
@@ -62,7 +63,15 @@ char *dec_to_hex(int dec) {
     hex[i] = 'x';
     hex[i + 1] = '0';
     hex[i + 2] = '\0';
-    return sign > 0 ? strreverse(hex) : strcat("-", strreverse(hex));
+    if (sign > 0) {
+        return strreverse(hex);
+    } else {
+        char* res = malloc(128);
+        memset(res, 0, 128);
+        res[0] = '-';
+        strcat(res, strreverse(hex));
+        return res;
+    }
 }
 
 char* bnot_hex(char *hex) {

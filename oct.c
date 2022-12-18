@@ -29,16 +29,17 @@ int oct_to_dec(char *oct) {
 char *dec_to_oct(int dec) {
     char* oct = malloc(128);
     memset(oct, 0, 128);
+    if (dec == 0) {
+        oct[0] = '0';
+        oct[1] = '\0';
+        return oct;
+    }
 
     int sign = dec >= 0 ? 1 : -1;
     dec = dec < 0 ? -dec : dec;
 
-    int i;
-    if (sign == -1) {
-        i = 1;
-    } else {
-        i = 0;
-    }
+    int i = 0;
+
 
     while (dec != 0) {
         oct[i] = dec % 8 + '0';
@@ -47,7 +48,15 @@ char *dec_to_oct(int dec) {
     }
 
     oct[i] = '\0';
-    return sign > 0 ? strreverse(oct) : strcat("-", strreverse(oct));
+    if (sign > 0) {
+        return strreverse(oct);
+    } else {
+        char* res = malloc(128);
+        memset(res, 0, 128);
+        res[0] = '-';
+        strcat(res, strreverse(oct));
+        return res;
+    }
 }
 
 char* bnot_oct(char *oct) {
