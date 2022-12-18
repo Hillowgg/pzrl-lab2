@@ -13,6 +13,9 @@ typedef enum {
 } Ebase;
 
 Ebase get_type(char *str) {
+    if (str[0] == '-') {
+        str++;
+    }
     if (str[0] == '0' && str[1] == 'x') {
         return HEX;
     } else if (str[0] == '0') {
