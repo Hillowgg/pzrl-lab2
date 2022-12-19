@@ -121,6 +121,10 @@ int main() {
             break;
         case '%':
             res = num1 % num2;
+            if (num2 == 0) {
+                printf("Ошибка: деление на 0");
+                return 1;
+            }
             break;
         case '&':
             res = num1 & num2;
