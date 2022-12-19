@@ -120,19 +120,31 @@ int main() {
             res = num1 * num2;
             break;
         case '%':
-            res = num1 % num2;
             if (num2 == 0) {
-                printf("Ошибка: деление на 0");
+                printf("Ошибка: деление на 0\n");
                 return 1;
             }
+            res = num1 % num2;
             break;
         case '&':
+            if (num1 < 0 || num2 < 0) {
+                printf("Ошибка: операция & не определена для отрицательных чисел\n");
+                return 1;
+            }
             res = num1 & num2;
             break;
         case '|':
+            if (num1 < 0 || num2 < 0) {
+                printf("Ошибка: операция | не определена для отрицательных чисел\n");
+                return 1;
+            }
             res = num1 | num2;
             break;
         case '^':
+            if (num1 < 0 || num2 < 0) {
+                printf("Ошибка: операция | не определена для отрицательных чисел\n");
+                return 1;
+            }
             res = num1 ^ num2;
             break;
     }
