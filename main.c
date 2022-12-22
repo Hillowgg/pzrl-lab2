@@ -7,26 +7,49 @@
 #include "hex.h"
 
 typedef enum {
+    ERR = 0,
     BIN = 2,
     OCT = 8,
     HEX = 16
 } Ebase;
 
+
 Ebase get_type(char *str) {
     if (str[0] == '-') {
         str++;
     }
+    Ebase tmpType;
+    int i = 0;
     if (str[0] == '0' && str[1] == 'x') {
-        return HEX;
+        tmpType = HEX;
+        i = 2;
     } else if (str[0] == '0') {
-        return OCT;
+        tmpType = OCT;
+    } else if (str[1] == '1') {
+        tmpType = BIN;
     } else {
-        return BIN;
+        return ERR;
     }
+
+
+    while (str[i] != '\0') {
+        if (str[i] == '\n') {
+            break;
+        }
+        if (tmpType == BIN && (str[i] != '0' && str[i] != '1')) {
+            return ERR;
+        } else if (tmpType == OCT && (str[i] < '0' || str[i] > '7')) {
+            return ERR;
+        } else if (tmpType == HEX && (str[i] < '0' || str[i] > '9') && (str[i] < 'a' || str[i] > 'f')) {
+            return ERR;
+        }
+        i++;
+    }
+    return tmpType;
 }
 
 void print_res(int res, Ebase type) {
-    char* str;
+    char *str;
     switch (type) {
         case BIN:
             str = dec_to_bin(res);
@@ -71,6 +94,10 @@ int main() {
     int res;
 
     if (counter == 1) {
+        if (split_str[0][0] != '~') {
+            printf("Неверный формат ввода\n");
+            return 1;
+        }
         type1 = get_type(&split_str[0][1]);
 
         switch (type1) {
@@ -83,6 +110,9 @@ int main() {
             case HEX:
                 res = hex_to_dec(bnot_hex(&split_str[0][1]));
                 break;
+            case ERR:
+                printf("Неверный формат ввода\n");
+                return 1;
         }
 
         print_res(res, type1);
@@ -103,9 +133,12 @@ int main() {
     } else if (type1 == OCT) {
         num1 = oct_to_dec(split_str[0]);
         num2 = oct_to_dec(split_str[2]);
-    } else {
+    } else if (type1 == HEX) {
         num1 = hex_to_dec(split_str[0]);
         num2 = hex_to_dec(split_str[2]);
+    } else {
+        printf("Неверный формат ввода\n");
+        return 1;
     }
 
 
@@ -147,6 +180,9 @@ int main() {
             }
             res = num1 ^ num2;
             break;
+        default:
+            printf("Ошибка: неверный оператор\n");
+            return 1;
     }
 
     print_res(res, type1);
