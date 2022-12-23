@@ -15,9 +15,10 @@ typedef enum {
 
 
 Ebase get_type(char *str) {
-    if (str[0] == '-') {
+    if (str[0] == '-' || str[0] == '~') {
         str++;
     }
+
     Ebase tmpType;
     int i = 0;
     if (str[0] == '0' && str[1] == 'x') {
@@ -25,12 +26,11 @@ Ebase get_type(char *str) {
         i = 2;
     } else if (str[0] == '0') {
         tmpType = OCT;
-    } else if (str[1] == '1') {
+    } else if (str[0] == '1') {
         tmpType = BIN;
     } else {
         return ERR;
     }
-
 
     while (str[i] != '\0') {
         if (str[i] == '\n') {
@@ -95,7 +95,7 @@ int main() {
 
     if (counter == 1) {
         if (split_str[0][0] != '~') {
-            printf("Неверный формат ввода\n");
+            printf("Неверный формат ввода1\n");
             return 1;
         }
         type1 = get_type(&split_str[0][1]);
