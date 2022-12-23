@@ -92,6 +92,7 @@ int main() {
     }
 
     int res;
+    char* tmp;
 
     if (counter == 1) {
         if (split_str[0][0] != '~') {
@@ -102,13 +103,16 @@ int main() {
 
         switch (type1) {
             case BIN:
-                res = bin_to_dec(bnot_bin(&split_str[0][1]));
+                tmp = bnot_bin(&split_str[0][1]);
+                res = bin_to_dec(tmp);
                 break;
             case OCT:
-                res = oct_to_dec(bnot_oct(&split_str[0][1]));
+                tmp = bnot_oct(&split_str[0][1]);
+                res = oct_to_dec(tmp);
                 break;
             case HEX:
-                res = hex_to_dec(bnot_hex(&split_str[0][1]));
+                tmp = bnot_hex(&split_str[0][1]);
+                res = hex_to_dec(tmp);
                 break;
             case ERR:
                 printf("Неверный формат ввода\n");
@@ -116,6 +120,7 @@ int main() {
         }
 
         print_res(res, type1);
+        free(tmp);
         return 0;
     }
 
